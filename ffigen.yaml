@@ -1,0 +1,20 @@
+# Run with `dart run ffigen --config ffigen.yaml`.
+name: FluidSynthBindings
+description: |
+  Bindings for `src/fluidsynth_ffi.h`.
+
+  Regenerate bindings with `dart run ffigen --config ffigen.yaml`.
+output: 'lib/src/ffi/generated_bindings.dart'
+headers:
+  entry-points:
+    - 'fluidsynth/include/fluidsynth.h'
+#  include-directives:
+#    - 'fluidsynth/build/include/fluidsynth.h'
+preamble: |
+  // ignore_for_file: always_specify_types
+  // ignore_for_file: camel_case_types
+  // ignore_for_file: non_constant_identifier_names
+comments:
+  style: any
+  length: full
+ignore-source-errors: true
