@@ -35,3 +35,9 @@ extension DartToNativeBooleanExtension on bool {
     return this ? 1 : 0;
   }
 }
+
+extension NativeToDartBooleanExtension on int {
+  bool toDartBoolean() {
+    return this != 0;
+  }
+}
