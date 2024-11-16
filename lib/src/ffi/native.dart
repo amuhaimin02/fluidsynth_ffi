@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:io' show Platform;
 
+import 'package:ffi/ffi.dart';
 import 'package:fluidsynth_ffi/src/ffi/generated_bindings.dart';
 
 class FluidNative {

@@ -1,7 +1,6 @@
 import 'dart:ffi';
 
 import '../fluidsynth_ffi.dart';
-import 'settings.dart';
 
 class FluidAudioDriver {
   late final Pointer<fluid_audio_driver_t> instance;
