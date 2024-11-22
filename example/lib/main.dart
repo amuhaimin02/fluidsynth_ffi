@@ -44,8 +44,7 @@ class _MyAppState extends State<MyApp> {
     _settings = FluidSettings();
     _synth = FluidSynth(_settings);
 
-    final soundfontId =
-        _synth.loadSoundfont(soundFontFile, resetPresets: false);
+    _synth.soundfontLoad(soundFontFile, resetPresets: false);
 
     _audioDriver = FluidAudioDriver(_settings, _synth);
     _player = FluidPlayer(_synth);
@@ -54,18 +53,11 @@ class _MyAppState extends State<MyApp> {
 
     _synth.programChange(channel: 0, program: 0);
     _synth.bankSelect(channel: 0, bank: 0);
-    _synth.gain = 1;
+    _synth.setGain(1);
 
     _player.tickCallback = ((tick) {
       setState(() {
         _tick = tick;
-      });
-    });
-
-    _player.playbackCallback = ((event) {
-      _synth.handleMidiEvent(event);
-      setState(() {
-        _lastEvent = event;
       });
     });
 
@@ -78,11 +70,6 @@ class _MyAppState extends State<MyApp> {
 
   void _stopSynth() {
     _player.stop();
-    _player.dispose();
-    _audioDriver.dispose();
-    _synth.dispose();
-
-    _settings.dispose();
 
     setState(() {
       _isPlaying = false;

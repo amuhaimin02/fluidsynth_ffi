@@ -5,17 +5,21 @@ import 'package:fluidsynth_ffi/fluidsynth_ffi.dart';
 
 import 'log.dart';
 
-class FluidMidiEvent {
+class FluidMidiEvent implements Finalizable {
+  static final _finalizer = NativeFinalizer(
+      FluidNative.bindings.addresses.delete_fluid_midi_event.cast());
+
   late final Pointer<fluid_midi_event_t> instance;
 
   FluidMidiEvent() {
     instance = FluidNative.bindings.new_fluid_midi_event();
+    _finalizer.attach(this, instance.cast());
   }
 
   FluidMidiEvent.fromInstance(this.instance);
 
   void dispose() {
-    FluidNative.bindings.delete_fluid_midi_event(instance);
+    _finalizer.detach(this);
   }
 
   // Channel

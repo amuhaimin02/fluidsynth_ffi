@@ -6,15 +6,19 @@ import 'package:fluidsynth_ffi/src/ffi/conversions.dart';
 import '../fluidsynth_ffi.dart';
 import 'log.dart';
 
-class FluidSettings {
+class FluidSettings implements Finalizable {
+  static final _finalizer = NativeFinalizer(
+      FluidNative.bindings.addresses.delete_fluid_settings.cast());
+
   late final Pointer<fluid_settings_t> instance;
 
   FluidSettings() {
     instance = FluidNative.bindings.new_fluid_settings();
+    _finalizer.attach(this, instance.cast());
   }
 
   void dispose() {
-    FluidNative.bindings.delete_fluid_settings(instance);
+    _finalizer.detach(this);
   }
 
   FluidSettingsType getType(String name) {
@@ -129,7 +133,6 @@ class FluidSettings {
       } else {
         return "";
       }
-
     } finally {
       calloc.free(pName);
       calloc.free(pVal);

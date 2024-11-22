@@ -1,6 +1,5 @@
 import 'dart:ffi';
 import 'dart:io';
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
@@ -8,15 +7,19 @@ import 'package:fluidsynth_ffi/src/ffi/conversions.dart';
 import '../fluidsynth_ffi.dart';
 import 'log.dart';
 
-class FluidSynth {
+class FluidSynth implements Finalizable {
+  static final _finalizer =
+      NativeFinalizer(FluidNative.bindings.addresses.delete_fluid_synth.cast());
+
   late final Pointer<fluid_synth_t> instance;
 
   FluidSynth(FluidSettings settings) {
     instance = FluidNative.bindings.new_fluid_synth(settings.instance);
+    _finalizer.attach(this, instance.cast());
   }
 
   void dispose() {
-    FluidNative.bindings.delete_fluid_synth(instance);
+    _finalizer.detach(this);
   }
 
   String error() {

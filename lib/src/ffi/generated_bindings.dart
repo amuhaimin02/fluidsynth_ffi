@@ -8775,6 +8775,73 @@ class FluidSynthBindings {
       _fluid_ladspa_effect_linkPtr.asFunction<
           int Function(ffi.Pointer<fluid_ladspa_fx_t>, ffi.Pointer<ffi.Char>,
               ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>();
+
+  late final addresses = _SymbolAddresses(this);
+}
+
+class _SymbolAddresses {
+  final FluidSynthBindings _library;
+  _SymbolAddresses(this._library);
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<fluid_settings_t>)>>
+      get delete_fluid_settings => _library._delete_fluid_settingsPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<fluid_synth_t>)>>
+      get delete_fluid_synth => _library._delete_fluid_synthPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<fluid_cmd_handler_t>)>>
+      get delete_fluid_cmd_handler => _library._delete_fluid_cmd_handlerPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<fluid_shell_t>)>>
+      get delete_fluid_shell => _library._delete_fluid_shellPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<fluid_server_t>)>>
+      get delete_fluid_server => _library._delete_fluid_serverPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<fluid_sfloader_t>)>>
+      get delete_fluid_sfloader => _library._delete_fluid_sfloaderPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<fluid_sfont_t>)>>
+      get delete_fluid_sfont => _library._delete_fluid_sfontPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<fluid_preset_t>)>>
+      get delete_fluid_preset => _library._delete_fluid_presetPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<fluid_sample_t>)>>
+      get delete_fluid_sample => _library._delete_fluid_samplePtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<fluid_audio_driver_t>)>>
+      get delete_fluid_audio_driver => _library._delete_fluid_audio_driverPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<fluid_file_renderer_t>)>>
+      get delete_fluid_file_renderer => _library._delete_fluid_file_rendererPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<fluid_event_t>)>>
+      get delete_fluid_event => _library._delete_fluid_eventPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<fluid_midi_event_t>)>>
+      get delete_fluid_midi_event => _library._delete_fluid_midi_eventPtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<fluid_midi_router_t>)>>
+      get delete_fluid_midi_router => _library._delete_fluid_midi_routerPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<fluid_midi_router_rule_t>)>>
+      get delete_fluid_midi_router_rule =>
+          _library._delete_fluid_midi_router_rulePtr;
+  ffi.Pointer<
+          ffi
+          .NativeFunction<ffi.Void Function(ffi.Pointer<fluid_midi_driver_t>)>>
+      get delete_fluid_midi_driver => _library._delete_fluid_midi_driverPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<fluid_player_t>)>>
+      get delete_fluid_player => _library._delete_fluid_playerPtr;
+  ffi.Pointer<
+          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<fluid_sequencer_t>)>>
+      get delete_fluid_sequencer => _library._delete_fluid_sequencerPtr;
+  ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<fluid_mod_t>)>>
+      get delete_fluid_mod => _library._delete_fluid_modPtr;
 }
 
 /// mbstate_t is an opaque object to keep conversion state, during multibyte

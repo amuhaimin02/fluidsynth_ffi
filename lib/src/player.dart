@@ -2,7 +2,6 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:ffi/ffi.dart';
-import 'package:fluidsynth_ffi/src/midi_event.dart';
 
 import '../fluidsynth_ffi.dart';
 import 'log.dart';
@@ -12,15 +11,19 @@ typedef _NativeMidiEventCallback = Void Function(
 
 typedef _NativeMidiTickCallback = Void Function(Pointer<Void> data, Int tick);
 
-class FluidPlayer {
+class FluidPlayer implements Finalizable {
+  static final _finalizer = NativeFinalizer(
+      FluidNative.bindings.addresses.delete_fluid_player.cast());
+
   late final Pointer<fluid_player_t> instance;
 
   FluidPlayer(FluidSynth synth) {
     instance = FluidNative.bindings.new_fluid_player(synth.instance);
+    _finalizer.attach(this, instance.cast());
   }
 
   void dispose() {
-    FluidNative.bindings.delete_fluid_player(instance);
+    _finalizer.detach(this);
   }
 
   void add(File midiFile) {

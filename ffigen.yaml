@@ -9,7 +9,7 @@ headers:
   entry-points:
     - 'fluidsynth/include/fluidsynth.h'
 #  include-directives:
-#    - 'fluidsynth/build/include/fluidsynth.h'
+#    - 'fluidsynth/include/fluidsynth.h'
 preamble: |
   // ignore_for_file: always_specify_types
   // ignore_for_file: camel_case_types
@@ -18,3 +18,7 @@ comments:
   style: any
   length: full
 ignore-source-errors: true
+functions:
+  symbol-address:
+    include:
+      - 'delete_.*' # Expose delete function pointers
