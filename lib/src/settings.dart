@@ -124,7 +124,12 @@ class FluidSettings {
           .fluid_settings_dupstr(instance, pName.cast(), pVal);
       FluidLog.handleResult(result);
 
-      return pVal.value.cast<Utf8>().toDartString();
+      if (pVal.value != nullptr) {
+        return pVal.value.cast<Utf8>().toDartString();
+      } else {
+        return "";
+      }
+
     } finally {
       calloc.free(pName);
       calloc.free(pVal);
