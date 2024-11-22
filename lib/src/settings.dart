@@ -14,7 +14,7 @@ class FluidSettings implements Finalizable {
 
   FluidSettings() {
     instance = FluidNative.bindings.new_fluid_settings();
-    _finalizer.attach(this, instance.cast());
+    // _finalizer.attach(this, instance.cast(), detach: this);
   }
 
   void dispose() {

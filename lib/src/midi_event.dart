@@ -13,7 +13,7 @@ class FluidMidiEvent implements Finalizable {
 
   FluidMidiEvent() {
     instance = FluidNative.bindings.new_fluid_midi_event();
-    _finalizer.attach(this, instance.cast());
+    _finalizer.attach(this, instance.cast(), detach: this);
   }
 
   FluidMidiEvent.fromInstance(this.instance);

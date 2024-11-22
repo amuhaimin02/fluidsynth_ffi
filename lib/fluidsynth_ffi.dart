@@ -1,6 +1,7 @@
 export 'src/ffi/native.dart';
 export 'src/ffi/generated_bindings.dart';
 
+export 'src/exception.dart';
 export 'src/synth.dart';
 export 'src/settings.dart';
 export 'src/audio_driver.dart';

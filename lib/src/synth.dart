@@ -15,7 +15,7 @@ class FluidSynth implements Finalizable {
 
   FluidSynth(FluidSettings settings) {
     instance = FluidNative.bindings.new_fluid_synth(settings.instance);
-    _finalizer.attach(this, instance.cast());
+    _finalizer.attach(this, instance.cast(), detach: this);
   }
 
   void dispose() {
@@ -24,10 +24,11 @@ class FluidSynth implements Finalizable {
 
   String error() {
     final pError = FluidNative.bindings.fluid_synth_error(instance);
-    try {
+    // TODO: Free
+    if (pError != nullptr) {
       return pError.cast<Utf8>().toDartString();
-    } finally {
-      calloc.free(pError);
+    } else {
+      return "";
     }
   }
 

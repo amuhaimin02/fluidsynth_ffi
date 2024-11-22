@@ -19,7 +19,7 @@ class FluidPlayer implements Finalizable {
 
   FluidPlayer(FluidSynth synth) {
     instance = FluidNative.bindings.new_fluid_player(synth.instance);
-    _finalizer.attach(this, instance.cast());
+    _finalizer.attach(this, instance.cast(), detach: this);
   }
 
   void dispose() {
