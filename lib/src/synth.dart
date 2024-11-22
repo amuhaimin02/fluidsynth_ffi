@@ -90,40 +90,99 @@ class FluidSynth implements Finalizable {
   /// Effect - Chorus
   /// **************************************************************************
 
-  void setChorus({
-    required int nr,
-    required double level,
-    required double speed,
-    required double depthMs,
-    required int type,
-  }) {
+  void chorusOn(bool on, {int? fxGroup}) {
     FluidNative.bindings
-        .fluid_synth_set_chorus(instance, nr, level, speed, depthMs, type);
+        .fluid_synth_chorus_on(instance, fxGroup ?? -1, on.toNativeBoolean());
   }
 
-  void setChorusOn(bool on) {
-    FluidNative.bindings
-        .fluid_synth_set_chorus_on(instance, on.toNativeBoolean());
+  double getChorusDepth({int? fxGroup}) {
+    final pVal = calloc<Double>();
+    try {
+      final result = FluidNative.bindings
+          .fluid_synth_get_chorus_group_depth(instance, fxGroup ?? -1, pVal);
+      FluidLog.handleResult(result);
+      return pVal.value;
+    } finally {
+      calloc.free(pVal);
+    }
   }
 
-  int getChorusNumber() {
-    return FluidNative.bindings.fluid_synth_get_chorus_nr(instance);
+  double getChorusLevel({int? fxGroup}) {
+    final pVal = calloc<Double>();
+    try {
+      final result = FluidNative.bindings
+          .fluid_synth_get_chorus_group_level(instance, fxGroup ?? -1, pVal);
+      FluidLog.handleResult(result);
+      return pVal.value;
+    } finally {
+      calloc.free(pVal);
+    }
   }
 
-  double getChorusLevel() {
-    return FluidNative.bindings.fluid_synth_get_chorus_level(instance);
+  int getChorusNumber({int? fxGroup}) {
+    final pVal = calloc<Int>();
+    try {
+      final result = FluidNative.bindings
+          .fluid_synth_get_chorus_group_nr(instance, fxGroup ?? -1, pVal);
+      FluidLog.handleResult(result);
+      return pVal.value;
+    } finally {
+      calloc.free(pVal);
+    }
   }
 
-  double getChorusSpeed() {
-    return FluidNative.bindings.fluid_synth_get_chorus_speed(instance);
+  double getChorusSpeed({int? fxGroup}) {
+    final pVal = calloc<Double>();
+    try {
+      final result = FluidNative.bindings
+          .fluid_synth_get_chorus_group_speed(instance, fxGroup ?? -1, pVal);
+      FluidLog.handleResult(result);
+      return pVal.value;
+    } finally {
+      calloc.free(pVal);
+    }
   }
 
-  double getChorusDepth() {
-    return FluidNative.bindings.fluid_synth_get_chorus_depth(instance);
+  FluidChorusModType getChorusType({int? fxGroup}) {
+    final pVal = calloc<Double>();
+    try {
+      final result = FluidNative.bindings
+          .fluid_synth_get_chorus_group_speed(instance, fxGroup ?? -1, pVal);
+      FluidLog.handleResult(result);
+      return FluidChorusModType.values.firstWhere((e) => e.code == pVal.value);
+    } finally {
+      calloc.free(pVal);
+    }
   }
 
-  int getChorusType() {
-    return FluidNative.bindings.fluid_synth_get_chorus_type(instance);
+  void setChorusDepth(double value, {int? fxGroup}) {
+    final result = FluidNative.bindings
+        .fluid_synth_set_chorus_group_depth(instance, fxGroup ?? -1, value);
+    FluidLog.handleResult(result);
+  }
+
+  void setChorusLevel(double value, {int? fxGroup}) {
+    final result = FluidNative.bindings
+        .fluid_synth_set_chorus_group_level(instance, fxGroup ?? -1, value);
+    FluidLog.handleResult(result);
+  }
+
+  void setChorusNumber(int value, {int? fxGroup}) {
+    final result = FluidNative.bindings
+        .fluid_synth_set_chorus_group_nr(instance, fxGroup ?? -1, value);
+    FluidLog.handleResult(result);
+  }
+
+  void setChorusSpeed(double value, {int? fxGroup}) {
+    final result = FluidNative.bindings
+        .fluid_synth_set_chorus_group_speed(instance, fxGroup ?? -1, value);
+    FluidLog.handleResult(result);
+  }
+
+  void setChorusType(FluidChorusModType type, {int? fxGroup}) {
+    final result = FluidNative.bindings
+        .fluid_synth_set_chorus_group_type(instance, fxGroup ?? -1, type.code);
+    FluidLog.handleResult(result);
   }
 
   /// **************************************************************************
@@ -720,4 +779,14 @@ class FluidSynth implements Finalizable {
   /// **************************************************************************
   /// Synthesis Voice Control
   /// **************************************************************************
+}
+
+enum FluidChorusModType {
+  sine(fluid_chorus_mod.FLUID_CHORUS_MOD_SINE),
+  triangle(fluid_chorus_mod.FLUID_CHORUS_MOD_TRIANGLE),
+  ;
+
+  final int code;
+
+  const FluidChorusModType(this.code);
 }
